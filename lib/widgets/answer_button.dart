@@ -1,9 +1,10 @@
 // ignore_for_file: file_names
 
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:red_squirrel/utils/constants/colors.dart';
+import 'package:red_squirrel/utils/constants/resources.dart';
 import 'package:red_squirrel/utils/constants/test_style.dart';
 
 class AnswerButton extends StatefulWidget {
@@ -54,33 +55,47 @@ class _AnswerButtonState extends State<AnswerButton> {
                 side: BorderSide(
                   width: 2.0, // Set the desired border width here
                   color: !widget.isChecked
-                      ? Colors.grey.shade300
+                      ? Colors.grey
                       : (widget.isTrue
-                          ? ThemeColors.counterColor
+                          ? ThemeColors.success
                           : ThemeColors
                               .primary), // Set the desired border color here
                 ),
               ),
               backgroundColor:
-                  status == true ? ThemeColors.background : Colors.white,
+                  status == true ? ThemeColors.background : ThemeColors.label,
               foregroundColor: ThemeColors.secondary,
               shadowColor: Colors.grey,
-              elevation: 2.0,
+              elevation: 3.0,
               splashFactory: NoSplash.splashFactory),
           child: Row(
             children: [
               const Spacer(
-                flex: 1,
+                flex: 3,
               ),
               Text(
                 widget.answer,
                 textAlign: TextAlign.center,
-                softWrap: true,
                 style: CustomTextStyle.LabelText(),
               ),
               const Spacer(
+                flex: 2,
+              ),
+              if (widget.isChecked && widget.isTrue)
+                SvgPicture.asset(
+                  SvgIcons.success,
+                  width: 24,
+                  height: 24,
+                ),
+              if (widget.isChecked && !widget.isTrue)
+                SvgPicture.asset(
+                  SvgIcons.fail,
+                  width: 24,
+                  height: 24,
+                ),
+              const Spacer(
                 flex: 1,
-              )
+              ),
             ],
           ),
         ));

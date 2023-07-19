@@ -10,7 +10,7 @@ class CountTimer extends StatefulWidget {
   const CountTimer({
     super.key,
     required this.timeDuration,
-    this.backgroundColor = ThemeColors.counterColor,
+    this.backgroundColor = ThemeColors.success,
   });
 
   @override
@@ -41,7 +41,7 @@ class _CounterState extends State<CountTimer> {
     final seconds = strDigits(timeDuration % 60);
     return Container(
         width: 92,
-        margin: const EdgeInsets.only(top: 2.0),
+        margin: const EdgeInsets.only(top: 8, bottom: 2),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
             color: widget.backgroundColor),
@@ -50,7 +50,8 @@ class _CounterState extends State<CountTimer> {
           children: [
             const Icon(
               Icons.alarm_sharp,
-              color: Colors.white,
+              color: ThemeColors.label,
+              size: 20,
             ),
             Container(
                 padding: const EdgeInsets.symmetric(vertical: 4),

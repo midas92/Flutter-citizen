@@ -1,11 +1,11 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:red_squirrel/utils/constants/colors.dart';
+import 'package:red_squirrel/utils/constants/resources.dart';
 import 'package:red_squirrel/utils/constants/test_style.dart';
-
-import 'dart:math';
 
 class ProgressBar extends StatefulWidget {
   final int count;
@@ -16,7 +16,7 @@ class ProgressBar extends StatefulWidget {
     super.key,
     required this.count,
     this.backgroundColor = ThemeColors.secondary,
-    this.foregroundColor = ThemeColors.progressBarColor,
+    this.foregroundColor = ThemeColors.progress,
   });
 
   @override
@@ -50,37 +50,42 @@ class _ProgressBarState extends State<ProgressBar> {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Transform.rotate(
-              angle: 180 * pi / 180,
-              child: SizedBox(
-                child: IconButton(
-                  padding: const EdgeInsets.all(0.0),
-                  icon: Icon(Icons.forward_rounded,
-                      color: step == 1
-                          ? widget.foregroundColor
-                          : widget.backgroundColor,
-                      size: 32.0),
-                  onPressed: () {
-                    previous();
-                    // Handle previous button press
-                  },
+            SizedBox(
+              child: IconButton(
+                // padding: const EdgeInsets.only(left: 4),
+                icon: SvgPicture.asset(
+                  step == 1 ? SvgIcons.previous_disabled : SvgIcons.previous,
+                  width: 24,
+                  height: 24,
                 ),
+
+                onPressed: () {
+                  previous();
+                  // Handle previous button press
+                },
               ),
+            ),
+            const Spacer(
+              flex: 1,
             ),
             Text(
               '$step / $count',
               style: CustomTextStyle.DescText(),
             ),
+            const Spacer(
+              flex: 1,
+            ),
             SizedBox(
               child: IconButton(
-                padding: const EdgeInsets.all(5.0),
-                icon: Icon(Icons.forward_rounded,
-                    color: step == count
-                        ? widget.foregroundColor
-                        : widget.backgroundColor,
-                    size: 32.0),
+                // padding: const EdgeInsets.all(0.0),
+                color: Colors.red,
+                icon: SvgPicture.asset(
+                  step == count ? SvgIcons.next_disabled : SvgIcons.next,
+                  width: 24,
+                  height: 24,
+                ),
                 onPressed: () {
                   next();
                   // Handle next button press
