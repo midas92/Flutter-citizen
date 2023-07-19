@@ -98,9 +98,13 @@ class _FullTestPage extends State<FullTestPage> {
                             ),
                             AnswerButton(
                               answer: 'Sr. Francis Walsingham',
+                              isChecked: true,
+                              isTrue: true,
                             ),
                             AnswerButton(
                               answer: 'Sr. Francis Chichester',
+                              isChecked: true,
+                              isTrue: false,
                             ),
                             AnswerButton(
                               answer: 'Sr. Robin Knox-Johnston',

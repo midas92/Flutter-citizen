@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:red_squirrel/utils/constants/colors.dart';
-import 'package:red_squirrel/utils/constants/fonts.dart';
 import 'package:red_squirrel/utils/constants/test_style.dart';
 
 import 'dart:math';
@@ -92,7 +91,7 @@ class _ProgressBarState extends State<ProgressBar> {
         ),
         GFProgressBar(
           percentage: step / count * 1.0,
-          lineHeight: 8,
+          lineHeight: 8.5,
           backgroundColor: widget.foregroundColor,
           progressBarColor: widget.backgroundColor,
           animation: true,

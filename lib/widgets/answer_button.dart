@@ -1,16 +1,21 @@
 // ignore_for_file: file_names
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:red_squirrel/utils/constants/colors.dart';
-import 'package:red_squirrel/utils/constants/fonts.dart';
 import 'package:red_squirrel/utils/constants/test_style.dart';
 
 class AnswerButton extends StatefulWidget {
   final String answer;
+  final bool isTrue;
+  final bool isChecked;
 
   const AnswerButton({
     super.key,
     required this.answer,
+    this.isTrue = true,
+    this.isChecked = false,
   });
 
   @override
@@ -48,8 +53,12 @@ class _AnswerButtonState extends State<AnswerButton> {
                 borderRadius: BorderRadius.circular(6),
                 side: BorderSide(
                   width: 2.0, // Set the desired border width here
-                  color:
-                      Colors.grey.shade400, // Set the desired border color here
+                  color: !widget.isChecked
+                      ? Colors.grey.shade300
+                      : (widget.isTrue
+                          ? ThemeColors.counterColor
+                          : ThemeColors
+                              .primary), // Set the desired border color here
                 ),
               ),
               backgroundColor:
@@ -58,11 +67,21 @@ class _AnswerButtonState extends State<AnswerButton> {
               shadowColor: Colors.grey,
               elevation: 2.0,
               splashFactory: NoSplash.splashFactory),
-          child: Text(
-            widget.answer,
-            textAlign: TextAlign.center,
-            softWrap: true,
-            style: CustomTextStyle.LabelText(),
+          child: Row(
+            children: [
+              const Spacer(
+                flex: 1,
+              ),
+              Text(
+                widget.answer,
+                textAlign: TextAlign.center,
+                softWrap: true,
+                style: CustomTextStyle.LabelText(),
+              ),
+              const Spacer(
+                flex: 1,
+              )
+            ],
           ),
         ));
   }
