@@ -16,7 +16,7 @@ class SubmitButton extends StatelessWidget {
     // required this.onPressed,
     required this.text,
     this.disabled = true,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor = ThemeColors.label,
     this.foregroundColor = ThemeColors.primary,
   });
 
@@ -35,7 +35,7 @@ class SubmitButton extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(24))),
     );
     return Container(
-        margin: const EdgeInsets.symmetric(vertical: 6),
+        margin: const EdgeInsets.symmetric(vertical: 20),
         child: ElevatedButton(
             style: buttonStyle,
             onPressed: (!disabled
