@@ -33,31 +33,36 @@ class CustomTextStyle {
           fontFamily: fontFamily,
           shadows: shadows);
 
-  static TextStyle SectionTitle(
-          [Color textColor = ThemeColors.secondary,
-          double fontSize = 30,
-          FontWeight fontWeight = FontWeight.w700,
-          String fontFamily = Fonts.primaryFont,
-          List<Shadow> shadows = const []]) =>
+  static TextStyle SectionTitle([
+    Color textColor = ThemeColors.secondary,
+    double fontSize = 30,
+    FontWeight fontWeight = FontWeight.w700,
+    String fontFamily = Fonts.primaryFont,
+    List<Shadow> shadows = const [],
+    double letterSpacing = 0,
+  ]) =>
       TextStyle(
           color: textColor,
           fontWeight: fontWeight,
           fontSize: fontSize,
           fontFamily: fontFamily,
-          shadows: shadows);
+          shadows: shadows,
+          letterSpacing: letterSpacing);
 
   static TextStyle SubText(
           [Color textColor = ThemeColors.secondary,
           double fontSize = 24,
           FontWeight fontWeight = FontWeight.w700,
           String fontFamily = Fonts.primaryFont,
-          List<Shadow> shadows = const []]) =>
+          List<Shadow> shadows = const [],
+          double letterSpacing = 0]) =>
       TextStyle(
           color: textColor,
           fontWeight: fontWeight,
           fontSize: fontSize,
           fontFamily: fontFamily,
-          shadows: shadows);
+          shadows: shadows,
+          letterSpacing: letterSpacing);
 
   static TextStyle DescText([
     Color textColor = ThemeColors.secondary,

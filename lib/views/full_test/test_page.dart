@@ -1,18 +1,21 @@
 // ignore_for_file: library_private_types_in_public_api, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import 'package:red_squirrel/utils/constants/colors.dart';
+import 'package:red_squirrel/utils/constants/fonts.dart';
 import 'package:red_squirrel/utils/constants/strings.dart';
+import 'package:red_squirrel/utils/constants/resources.dart';
+import 'package:red_squirrel/utils/constants/test_style.dart';
+
 import 'package:red_squirrel/widgets/answer_button.dart';
 import 'package:red_squirrel/widgets/timer.dart';
-import 'package:red_squirrel/widgets/progress_bar.dart';
 import 'package:red_squirrel/widgets/question_label.dart';
-import 'package:red_squirrel/utils/constants/resources.dart';
 import 'package:red_squirrel/widgets/submit_button.dart';
 import 'package:red_squirrel/widgets/navbar.dart';
+
+import 'package:red_squirrel/components/progress_bar.dart';
+import 'package:red_squirrel/components/test_content.dart';
 
 class FullTestPage extends StatefulWidget {
   const FullTestPage({
@@ -46,11 +49,13 @@ class _FullTestPage extends State<FullTestPage> {
             child: Center(
               child: Text(
                 Strings.fullTestCaption.toUpperCase(),
-                style: const TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                  letterSpacing: 2,
+                style: CustomTextStyle.SectionTitle(
+                  ThemeColors.label,
+                  30,
+                  FontWeight.w900,
+                  Fonts.primaryFont,
+                  [],
+                  2,
                 ),
               ),
             ),
@@ -60,7 +65,7 @@ class _FullTestPage extends State<FullTestPage> {
           Expanded(
             child: Stack(children: [
               Container(
-                padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
                 clipBehavior: Clip.none,
                 decoration: const BoxDecoration(
                   color: ThemeColors.background,
@@ -78,51 +83,73 @@ class _FullTestPage extends State<FullTestPage> {
                         fit: BoxFit.scaleDown,
                       )),
                   Column(children: [
-                    CountTimer(
-                      timeDuration: 250,
+                    Row(
+                      children: [
+                        const Spacer(
+                          flex: 1,
+                        ),
+                        SizedBox(
+                          child: CountTimer(
+                            timeDuration: 250,
+                          ),
+                        ),
+                      ],
                     ),
                     ProgressBar(count: 24),
                     const SizedBox(
                       height: 26,
                     ),
-                    Expanded(
-                        child: SingleChildScrollView(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            QuestionLabel(
-                              question:
-                                  'Who was the first person to sail single-handed around the world?',
-                            ),
-                            SizedBox(height: 40),
-                            AnswerButton(
-                              answer: 'Sr. Francis Drake',
-                            ),
-                            AnswerButton(
-                              answer: 'Sr. Francis Walsingham',
-                            ),
-                            AnswerButton(
-                              answer: 'Sr. Francis Chichester',
-                            ),
-                            AnswerButton(
-                              answer: 'Sr. Robin Knox-Johnston',
-                            ),
-                            Row(
-                              children: [
-                                const Spacer(
-                                  flex: 1,
-                                ),
-                                SizedBox(
-                                    child: SubmitButton(
-                                        text: Strings.submitButton
-                                            .toUpperCase())),
-                                const Spacer(
-                                  flex: 1,
-                                )
-                              ],
-                            )
-                          ]),
-                    )),
+
+                    // Expanded(
+                    //     child: SingleChildScrollView(
+                    //         // child: TestContent(
+                    //         //   question:
+                    //         //       'Who was the first person to sail single-handed around the world?',
+                    //         //   answers: [
+                    //         //     'Sr. Francis Drake',
+                    //         //     'Sr. Francis Walsingham',
+                    //         //     'Sr. Francis Chichester',
+                    //         //     'Sr. Robin Knox-Johnston'
+                    //         //   ],
+                    //         //   condition: false,
+                    //         //   count: 4,
+                    //         // ),
+
+                    //         // child: TestContent(
+                    //         //   question:
+                    //         //       'Who was the first person to sail single-handed around the world?Who was the first person to sail single-handed around the world?Who was the first person to sail single-handed around the world?',
+                    //         //   answers: [
+                    //         //     'Sr. Francis Drake',
+                    //         //     'Sr. Francis Walsingham',
+                    //         //   ],
+                    //         //   condition: false,
+                    //         //   count: 2,
+                    //         // ),
+                    //         )),
+
+                    TestContent(
+                      question:
+                          'Who was the first person to sail single-handed around the world?',
+                      answers: [],
+                      condition: true,
+                      count: 0,
+                    ),
+                    Spacer(
+                      flex: 1,
+                    ),
+                    Row(
+                      children: [
+                        const Spacer(
+                          flex: 1,
+                        ),
+                        SizedBox(
+                            child: SubmitButton(
+                                text: Strings.submitButton.toUpperCase())),
+                        const Spacer(
+                          flex: 1,
+                        )
+                      ],
+                    )
                   ]),
                 ]),
               ),

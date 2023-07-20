@@ -53,7 +53,7 @@ class _QuestionLabelState extends State<QuestionLabel> {
           softWrap: true,
           overflow: TextOverflow.fade,
           style: CustomTextStyle.DescText(ThemeColors.secondary, 18,
-              FontWeight.w600, Fonts.primaryFont, [], 1.8, 0.2),
+              FontWeight.w600, Fonts.primaryFont, [], 1.8, 1.2),
         ),
       ),
     );
