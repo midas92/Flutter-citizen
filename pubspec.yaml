@@ -43,6 +43,7 @@ dependencies:
   blurrycontainer: ^1.0.2
   pressable: ^0.5.0
   indexed: ^0.0.8
+  url_launcher: ^6.1.12
 
 dev_dependencies:
   flutter_test:
