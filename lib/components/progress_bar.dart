@@ -9,12 +9,20 @@ import 'package:red_squirrel/utils/constants/test_style.dart';
 
 class ProgressBar extends StatefulWidget {
   final int count;
+  final int step;
+  final Function previous;
+  final Function next;
+  final String caption;
   final Color backgroundColor;
   final Color foregroundColor;
 
   const ProgressBar({
     super.key,
+    required this.step,
     required this.count,
+    required this.previous,
+    required this.next,
+    required this.caption,
     this.backgroundColor = ThemeColors.secondary,
     this.foregroundColor = ThemeColors.progress,
   });
@@ -24,45 +32,33 @@ class ProgressBar extends StatefulWidget {
 }
 
 class _ProgressBarState extends State<ProgressBar> {
-  late int count;
-  int step = 1;
-
   @override
   void initState() {
     super.initState();
-    count = widget.count;
-  }
-
-  void next() {
-    setState(() {
-      if (step < count) step += 1;
-    });
-  }
-
-  void previous() {
-    setState(() {
-      if (step > 1) step -= 1;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    int step = widget.step;
+    int count = widget.count;
     return Column(
       children: [
         Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             SizedBox(
               child: IconButton(
                 // padding: const EdgeInsets.only(left: 4),
                 icon: SvgPicture.asset(
-                  step == 1 ? SvgIcons.previous_disabled : SvgIcons.previous,
+                  widget.step == 1
+                      ? SvgIcons.previous_disabled
+                      : SvgIcons.previous,
                   width: 24,
                   height: 24,
                 ),
 
                 onPressed: () {
-                  previous();
+                  widget.previous();
                   // Handle previous button press
                 },
               ),
@@ -82,20 +78,21 @@ class _ProgressBarState extends State<ProgressBar> {
                 // padding: const EdgeInsets.all(0.0),
                 color: Colors.red,
                 icon: SvgPicture.asset(
-                  step == count ? SvgIcons.next_disabled : SvgIcons.next,
+                  widget.step == widget.count
+                      ? SvgIcons.next_disabled
+                      : SvgIcons.next,
                   width: 24,
                   height: 24,
                 ),
                 onPressed: () {
-                  next();
-                  // Handle next button press
+                  widget.next(); // Handle next button press
                 },
               ),
             ),
           ],
         ),
         GFProgressBar(
-          percentage: step / count * 1.0,
+          percentage: widget.step / widget.count * 1.0,
           lineHeight: 8.5,
           backgroundColor: widget.foregroundColor,
           progressBarColor: widget.backgroundColor,
