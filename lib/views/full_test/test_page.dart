@@ -9,6 +9,7 @@ import 'package:red_squirrel/utils/constants/fonts.dart';
 import 'package:red_squirrel/utils/constants/strings.dart';
 import 'package:red_squirrel/utils/constants/resources.dart';
 import 'package:red_squirrel/utils/constants/test_style.dart';
+import 'package:red_squirrel/views/full_test/result_page.dart';
 
 import 'package:red_squirrel/widgets/timer.dart';
 import 'package:red_squirrel/widgets/submit_button.dart';

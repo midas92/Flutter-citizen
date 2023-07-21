@@ -16,4 +16,11 @@ class Strings {
   static const String submitButton = "submit";
   static const String nextButton = "next";
   static const String feedbackButton = "feedback";
+  static const String testByChapter = "Test by Chapter";
+  static const String fullTest = "Full Test";
+  static const String chapter = "Chapter ";
+  static const String two = "2&3";
+  static const String four = "4";
+  static const String five = "5";
+  static const String six = "6";
 }
