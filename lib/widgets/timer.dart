@@ -8,10 +8,12 @@ import 'dart:async';
 class CountTimer extends StatefulWidget {
   final int timeDuration;
   final Color backgroundColor;
+  final bool isVisible;
 
   const CountTimer({
     super.key,
     required this.timeDuration,
+    required this.isVisible,
     this.backgroundColor = ThemeColors.success,
   });
 
@@ -55,7 +57,7 @@ class _CounterState extends State<CountTimer> {
         margin: const EdgeInsets.only(top: 8, bottom: 2),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
-            color: widget.backgroundColor),
+            color: widget.isVisible ? ThemeColors.success : ThemeColors.label),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -66,7 +68,7 @@ class _CounterState extends State<CountTimer> {
             ),
             Container(
                 padding: const EdgeInsets.symmetric(vertical: 4),
-                child: Text('$minutes:$seconds',
+                child: Text('$minutes : $seconds',
                     textAlign: TextAlign.center,
                     style: CustomTextStyle.DescText(
                         ThemeColors.label, 18, FontWeight.w400))),

@@ -83,6 +83,7 @@ class _TestContentState extends State<TestContent> {
               },
               states: states,
               index: 0,
+              state: false,
             ),
             SizedBox(height: widget.type != 3 ? 0 : 20),
             AnswerButton(
@@ -96,6 +97,7 @@ class _TestContentState extends State<TestContent> {
               },
               states: states,
               index: 1,
+              state: false,
             ),
             widget.type != 3
                 ? AnswerButton(
@@ -109,6 +111,7 @@ class _TestContentState extends State<TestContent> {
                     },
                     states: states,
                     index: 2,
+                    state: false,
                   )
                 : Container(),
             widget.type != 3
@@ -123,6 +126,7 @@ class _TestContentState extends State<TestContent> {
                     },
                     states: states,
                     index: 3,
+                    state: false,
                   )
                 : Container(),
           ],

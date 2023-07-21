@@ -10,6 +10,7 @@ import 'package:red_squirrel/utils/constants/resources.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:red_squirrel/utils/constants/test_style.dart';
 import 'package:red_squirrel/views/chapter_test/main_page.dart';
+import 'package:red_squirrel/views/full_test/feedback_page.dart';
 import 'package:red_squirrel/views/full_test/test_page.dart';
 
 class ResultPage extends StatefulWidget {
@@ -66,8 +67,8 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
       onTap: () {
         switch (type) {
           case 1:
-            // This is widget in fulltest/ feedback_page
-            Navigator.of(context).push<void>(MainPage.route());
+            // This is widget in full_test/feedback_page
+            Navigator.of(context).push<void>(FeedbackPage.route());
             break;
           case 2:
             Navigator.of(context).push<void>(MainPage.route());

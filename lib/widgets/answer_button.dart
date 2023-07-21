@@ -12,6 +12,7 @@ class AnswerButton extends StatefulWidget {
   final bool isTrue;
   final bool isChecked;
   final int index;
+  final bool state;
   final List<bool> states;
   final Function onChange;
 
@@ -21,6 +22,7 @@ class AnswerButton extends StatefulWidget {
     required this.index,
     required this.states,
     required this.onChange,
+    required this.state,
     this.isTrue = true,
     this.isChecked = false,
   });
@@ -36,6 +38,7 @@ class _AnswerButtonState extends State<AnswerButton> {
   @override
   void initState() {
     super.initState();
+    status = widget.state;
     answer = widget.answer;
   }
 

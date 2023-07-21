@@ -95,6 +95,8 @@ class _FullTestPage extends State<FullTestPage> {
   void next() {
     setState(() {
       disabled = true;
+      if (index == count) Navigator.of(context).push<void>(ResultPage.route());
+
       if (index < count) index += 1;
     });
   }
@@ -192,6 +194,7 @@ class _FullTestPage extends State<FullTestPage> {
                           SizedBox(
                             child: CountTimer(
                               timeDuration: 0,
+                              isVisible: true,
                             ),
                           ),
                         ],
