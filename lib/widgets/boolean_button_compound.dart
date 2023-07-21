@@ -42,14 +42,12 @@ class _BooleanButtonCompoundState extends State<BooleanButtonCompound> {
     setState(() {
       status = 1;
     });
-    widget.onChange();
   }
 
   void onFalse() {
     setState(() {
       status = 0;
     });
-    widget.onChange();
   }
 
   @override
@@ -82,133 +80,118 @@ class _BooleanButtonCompoundState extends State<BooleanButtonCompound> {
               topRight: Radius.circular(100),
               bottomRight: Radius.circular(100))),
     );
-    return Row(
-        //margin: const EdgeInsets.symmetric(vertical: 20),
-        children: [
-          // ElevatedButton(
-          //   onPressed: () {
-          //     // Button on press action
-          //   },
-          //   child: Container(
-          //       margin: EdgeInsets.all(0),
-          //       color: ThemeColors.label,
-          //       child: SvgPicture.asset(
-          //         SvgIcons.true_outlined,
-          //         width: 56,
-          //         height: 56,
-          //       )), // Replace with your actual image path
-          //   //label: Text('TRUE'),
-          // )
-
-          const Spacer(
-            flex: 1,
+    return Row(children: [
+      const Spacer(
+        flex: 1,
+      ),
+      Transform(
+          transform: Matrix4.skewX(-0.2),
+          child: ElevatedButton(
+              style: trueButtonStyle,
+              onPressed: () {
+                onTrue();
+                widget.onChange();
+              },
+              child: Container(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Row(children: [
+                    if (isTrue)
+                      Image.asset(
+                        Images.success,
+                        width: 28,
+                        height: 28,
+                        color: widget.isChecked && isTrue
+                            ? null
+                            : Color.fromRGBO(255, 255, 255, 0),
+                      ),
+                    if (!isTrue)
+                      Image.asset(
+                        Images.fail,
+                        width: 28,
+                        height: 28,
+                        color: widget.isChecked && !isTrue
+                            ? null
+                            : Color.fromRGBO(255, 255, 255, 0),
+                      ),
+                    Text(
+                      'TRUE',
+                      textAlign: TextAlign.center,
+                      style: CustomTextStyle.SubText(
+                          status == 1
+                              ? ThemeColors.label
+                              : ThemeColors.secondary,
+                          20,
+                          FontWeight.w900,
+                          Fonts.primaryFont,
+                          [],
+                          4),
+                    ),
+                  ])))),
+      Transform(
+          transform: Matrix4(
+            1,
+            0,
+            0,
+            0,
+            -0.2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            -4.5,
+            10,
+            0,
+            1,
           ),
-          Transform(
-              transform: Matrix4.skewX(-0.2),
-              child: ElevatedButton(
-                  style: trueButtonStyle,
-                  onPressed: () {
-                    onTrue();
-                  },
-                  child: Container(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                      child: Row(children: [
-                        if (isTrue)
-                          Image.asset(
-                            Images.success,
-                            width: 28,
-                            height: 28,
-                            color: widget.isChecked && isTrue
-                                ? null
-                                : Color.fromRGBO(255, 255, 255, 0),
-                          ),
-                        if (!isTrue)
-                          Image.asset(
-                            Images.fail,
-                            width: 28,
-                            height: 28,
-                            color: widget.isChecked && !isTrue
-                                ? null
-                                : Color.fromRGBO(255, 255, 255, 0),
-                          ),
-                        Text(
-                          'TRUE',
-                          textAlign: TextAlign.center,
-                          style: CustomTextStyle.SubText(
-                              status == 1
-                                  ? ThemeColors.label
-                                  : ThemeColors.secondary,
-                              20,
-                              FontWeight.w900,
-                              Fonts.primaryFont,
-                              [],
-                              4),
+          child: ElevatedButton(
+              style: falseButtonStyle,
+              onPressed: () {
+                onFalse();
+                widget.onChange();
+              },
+              child: Container(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Row(
+                    children: [
+                      Text(
+                        'FALSE',
+                        textAlign: TextAlign.center,
+                        style: CustomTextStyle.SubText(
+                            status == 0
+                                ? ThemeColors.label
+                                : ThemeColors.primary,
+                            20,
+                            FontWeight.w900,
+                            Fonts.primaryFont,
+                            [],
+                            4),
+                      ),
+                      if (!isTrue)
+                        Image.asset(
+                          Images.success,
+                          width: 28,
+                          height: 28,
+                          color: widget.isChecked && !isTrue
+                              ? null
+                              : Color.fromRGBO(255, 255, 255, 0),
                         ),
-                      ])))),
-          Transform(
-              transform: Matrix4(
-                1,
-                0,
-                0,
-                0,
-                -0.2,
-                1,
-                0,
-                0,
-                0,
-                0,
-                1,
-                0,
-                -4.5,
-                10,
-                0,
-                1,
-              ),
-              child: ElevatedButton(
-                  style: falseButtonStyle,
-                  onPressed: () {
-                    onFalse();
-                  },
-                  child: Container(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                      child: Row(
-                        children: [
-                          Text(
-                            'FALSE',
-                            textAlign: TextAlign.center,
-                            style: CustomTextStyle.SubText(
-                                status == 0
-                                    ? ThemeColors.label
-                                    : ThemeColors.primary,
-                                20,
-                                FontWeight.w900,
-                                Fonts.primaryFont,
-                                [],
-                                4),
-                          ),
-                          if (!isTrue)
-                            Image.asset(
-                              Images.success,
-                              width: 28,
-                              height: 28,
-                              color: widget.isChecked && !isTrue
-                                  ? null
-                                  : Color.fromRGBO(255, 255, 255, 0),
-                            ),
-                          if (isTrue)
-                            Image.asset(
-                              Images.fail,
-                              width: 28,
-                              height: 28,
-                              color: widget.isChecked && isTrue
-                                  ? null
-                                  : Color.fromRGBO(255, 255, 255, 0),
-                            ),
-                        ],
-                      )))),
-          const Spacer(
-            flex: 1,
-          ),
-        ]);
+                      if (isTrue)
+                        Image.asset(
+                          Images.fail,
+                          width: 28,
+                          height: 28,
+                          color: widget.isChecked && isTrue
+                              ? null
+                              : Color.fromRGBO(255, 255, 255, 0),
+                        ),
+                    ],
+                  )))),
+      const Spacer(
+        flex: 1,
+      ),
+    ]);
   }
 }

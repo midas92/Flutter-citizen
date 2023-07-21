@@ -10,6 +10,7 @@ class TestContent extends StatefulWidget {
   final int type;
   final String question;
   final List<String> answers;
+  final List<bool> trueAnswers;
   final Color backgroundColor;
   final Color foregroundColor;
   final Function onChange;
@@ -21,6 +22,7 @@ class TestContent extends StatefulWidget {
     required this.type,
     required this.question,
     required this.answers,
+    required this.trueAnswers,
     required this.onChange,
     required this.possible_answers,
     required this.isSubmitted,
@@ -33,12 +35,8 @@ class TestContent extends StatefulWidget {
 }
 
 class _TestContentState extends State<TestContent> {
-  int type = 0;
-  String question = '';
-  List<String> answers = [];
   List<bool> states = [false, false, false, false];
   bool conditionState = false;
-  bool isSubmitted = false;
 
   @override
   void initState() {
@@ -48,7 +46,7 @@ class _TestContentState extends State<TestContent> {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (type != 4) {
+      if (widget.type != 4) {
         int selectedCount = 0;
         for (int i = 0; i < 4; i++) {
           if (states[i] == true) selectedCount++;
@@ -77,7 +75,7 @@ class _TestContentState extends State<TestContent> {
             AnswerButton(
               answer: widget.answers[0],
               isChecked: widget.isSubmitted,
-              isTrue: false,
+              isTrue: widget.trueAnswers[0],
               onChange: (i, value) {
                 setState(() {
                   states[i] = value;
@@ -90,7 +88,7 @@ class _TestContentState extends State<TestContent> {
             AnswerButton(
               answer: widget.answers[1],
               isChecked: widget.isSubmitted,
-              isTrue: true,
+              isTrue: widget.trueAnswers[1],
               onChange: (i, value) {
                 setState(() {
                   states[i] = value;
@@ -103,7 +101,7 @@ class _TestContentState extends State<TestContent> {
                 ? AnswerButton(
                     answer: widget.answers[2],
                     isChecked: widget.isSubmitted,
-                    isTrue: false,
+                    isTrue: widget.trueAnswers[2],
                     onChange: (i, value) {
                       setState(() {
                         states[i] = value;
@@ -117,7 +115,7 @@ class _TestContentState extends State<TestContent> {
                 ? AnswerButton(
                     answer: widget.answers[3],
                     isChecked: widget.isSubmitted,
-                    isTrue: false,
+                    isTrue: widget.trueAnswers[3],
                     onChange: (i, value) {
                       setState(() {
                         states[i] = value;
@@ -134,7 +132,7 @@ class _TestContentState extends State<TestContent> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             const SizedBox(
-              height: 150,
+              height: 100,
             ),
             SizedBox(
                 child: BooleanButtonCompound(
