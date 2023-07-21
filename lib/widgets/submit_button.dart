@@ -38,14 +38,16 @@ class SubmitButton extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(24))),
     );
     return Container(
-        margin: const EdgeInsets.symmetric(vertical: 20),
+        margin: const EdgeInsets.only(top: 5, bottom: 35),
         child: ElevatedButton(
             style: buttonStyle,
             onPressed: (!disabled
                 ? () {
-                    if (text == Strings.submitButton)
+                    if (text == Strings.submitButton) {
                       onSubmit();
-                    else if (text == Strings.feedbackButton) onFeedback();
+                    } else if (text == Strings.feedbackButton) {
+                      onFeedback();
+                    }
                   }
                 : null),
             child: Container(

@@ -14,6 +14,7 @@ class Strings {
   static const String homeUpdateButton = "Update";
   static const String fullTestCaption = "Full test";
   static const String submitButton = "submit";
+  static const String nextButton = "next";
   static const String feedbackButton = "feedback";
   static const String testByChapter = "Test by Chapter";
   static const String fullTest = "Full Test";
