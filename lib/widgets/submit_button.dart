@@ -9,11 +9,11 @@ class SubmitButton extends StatelessWidget {
   final bool disabled;
   final Color backgroundColor;
   final Color foregroundColor;
-  // final Function onPressed;
+  final Function onPressed;
 
   const SubmitButton({
     super.key,
-    // required this.onPressed,
+    required this.onPressed,
     required this.text,
     this.disabled = true,
     this.backgroundColor = ThemeColors.label,
@@ -40,7 +40,7 @@ class SubmitButton extends StatelessWidget {
             style: buttonStyle,
             onPressed: (!disabled
                 ? () {
-                    // onPressed();
+                    onPressed();
                   }
                 : null),
             child: Container(

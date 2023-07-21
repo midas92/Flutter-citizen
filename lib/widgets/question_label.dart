@@ -34,7 +34,7 @@ class _QuestionLabelState extends State<QuestionLabel> {
         left: 2,
         right: 2,
       ),
-      padding: EdgeInsets.fromLTRB(20, 36, 20, 48),
+      padding: const EdgeInsets.fromLTRB(20, 36, 20, 48),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: Colors.white,

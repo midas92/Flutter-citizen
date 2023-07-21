@@ -7,6 +7,7 @@ import 'package:red_squirrel/utils/constants/fonts.dart';
 import 'package:red_squirrel/utils/constants/strings.dart';
 import 'package:red_squirrel/utils/constants/resources.dart';
 import 'package:red_squirrel/utils/constants/test_style.dart';
+import 'package:red_squirrel/views/full_test/result_page.dart';
 
 import 'package:red_squirrel/widgets/answer_button.dart';
 import 'package:red_squirrel/widgets/timer.dart';
@@ -144,7 +145,13 @@ class _FullTestPage extends State<FullTestPage> {
                         ),
                         SizedBox(
                             child: SubmitButton(
-                                text: Strings.submitButton.toUpperCase())),
+                          text: Strings.submitButton.toUpperCase(),
+                          disabled: false,
+                          onPressed: () {
+                            Navigator.of(context)
+                                .push<void>(ResultPage.route());
+                          },
+                        )),
                         const Spacer(
                           flex: 1,
                         )

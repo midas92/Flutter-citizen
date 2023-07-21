@@ -79,7 +79,7 @@ class _TestContentState extends State<TestContent> {
           ],
         )
       else
-        Column(
+        const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //const Spacer(flex: 1),
