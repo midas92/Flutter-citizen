@@ -7,7 +7,12 @@ class ThemeColors {
   static const Color label = Color(0xFFFFFFFF);
   static const Color border = Color(0xFF3E3E3E);
   static const Color success = Color(0xFF2A9918);
+  static const Color successProgressbar = Color(0xFFA2DC5F);
+  static const Color failedProgressbar = Color(0xFFF59304);
+  static const Color progressBar = Color(0x7FD1D9E6);
   static const Color progress = Color.fromARGB(128, 1, 33, 105);
+  static const Color failed = Color(0xffc8102e);
+
 
   static const Gradient gradient1 = LinearGradient(
     begin: Alignment.centerLeft,

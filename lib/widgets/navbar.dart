@@ -66,7 +66,7 @@ class _NavBarState extends State<NavBar> {
                     ),
                   ),
                   Positioned.fromRelativeRect(
-                    rect: RelativeRect.fromLTRB(0, 0, 0, 0),
+                    rect: const RelativeRect.fromLTRB(0, 0, 0, 0),
                     child: IconButton(
                       padding: const EdgeInsets.all(0.0),
                       icon: SvgPicture.asset(
