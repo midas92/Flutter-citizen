@@ -7,10 +7,9 @@ import 'package:red_squirrel/utils/constants/fonts.dart';
 import 'package:red_squirrel/utils/constants/strings.dart';
 import 'package:red_squirrel/utils/constants/resources.dart';
 import 'package:red_squirrel/utils/constants/test_style.dart';
+import 'package:red_squirrel/views/full_test/result_page.dart';
 
-import 'package:red_squirrel/widgets/answer_button.dart';
 import 'package:red_squirrel/widgets/timer.dart';
-import 'package:red_squirrel/widgets/question_label.dart';
 import 'package:red_squirrel/widgets/submit_button.dart';
 import 'package:red_squirrel/widgets/navbar.dart';
 
@@ -31,6 +30,29 @@ class FullTestPage extends StatefulWidget {
 }
 
 class _FullTestPage extends State<FullTestPage> {
+  int index = 1;
+  int count = 4;
+  int selectedCount = 0;
+  bool disabled = true;
+  bool isSubmitted = false;
+  bool showFeedback = false;
+
+  void next() {
+    setState(() {
+      if (index < count) index += 1;
+      isSubmitted = false;
+      disabled = true;
+    });
+  }
+
+  void previous() {
+    setState(() {
+      if (index > 1) index -= 1;
+      isSubmitted = false;
+      disabled = true;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -38,6 +60,35 @@ class _FullTestPage extends State<FullTestPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<int> PossibleAnswers = [0, 2, 1, 1, 1];
+    List<String> Questions = [
+      '',
+      'Who was the first person to sail single-handed around the world?',
+      'Who was the first person to sail single-handed around the world?Who was the first person to sail single-handed around the world?',
+      'Who was the first person to sail single-handed around the world?Who was the first person to sail single-handed around the world?Who was the first person to sail single-handed around the world?',
+      'Who was the first person to sail single-handed around the world?'
+    ];
+    List<List<String>> Answers = [
+      [],
+      [
+        'Sr. Francis Drake',
+        'Sr. Francis Walsingham',
+        'Sr. Francis Chichester',
+        'Sr. Robin Knox-Johnston'
+      ],
+      [
+        'Sr. Francis Drake',
+        'Sr. Francis Walsingham',
+        'Sr. Francis Chichester',
+        'Sr. Robin Knox-Johnston'
+      ],
+      [
+        'Sr. Francis Drake',
+        'Sr. Francis Walsingham',
+      ],
+      []
+    ];
+
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.primary,
         body: Column(children: [
@@ -74,6 +125,25 @@ class _FullTestPage extends State<FullTestPage> {
                       topRight: Radius.circular(16)),
                 ),
                 child: Stack(children: [
+                  if (showFeedback)
+                    Text(
+                        'Since 1999, hereditary peers have lost the automatic right to attend the House of Lords. '),
+                  // Positioned(
+                  //   bottom: -50,
+                  //   child: Container(
+                  //       width: double.infinity,
+                  //       height: 220,
+                  //       decoration: BoxDecoration(
+                  //           gradient: LinearGradient(
+                  //         begin: Alignment.topCenter,
+                  //         end: Alignment.bottomCenter,
+                  //         colors: [
+                  //           Color(0xff424242),
+                  //           Color(0xff191919),
+                  //           Colors.black
+                  //         ],
+                  //       ))),
+                  // ),
                   Positioned(
                       bottom: -46,
                       right: -12,
@@ -90,53 +160,96 @@ class _FullTestPage extends State<FullTestPage> {
                         ),
                         SizedBox(
                           child: CountTimer(
-                            timeDuration: 250,
+                            timeDuration: 0,
                           ),
                         ),
                       ],
                     ),
-                    ProgressBar(count: 24),
-                    const SizedBox(
+                    ///////////////////////////ProgressBar//////////////////////////////
+                    ProgressBar(
+                      count: count,
+                      step: index,
+                      caption: '$index / $count',
+                      next: () {
+                        setState(() {
+                          if (index < count) index += 1;
+                        });
+                      },
+                      previous: () {
+                        setState(() {
+                          if (index > 1) index -= 1;
+                        });
+                      },
+                    ),
+
+                    SizedBox(
                       height: 26,
                     ),
+                    ///////////////////////////Content//////////////////////////////
+                    Expanded(
+                        child: SingleChildScrollView(
+                      // child: TestContent(
+                      //   question:
+                      //       'Who was the first person to sail single-handed around the world?',
+                      //   answers: [
+                      //     'Sr. Francis Drake',
+                      //     'Sr. Francis Walsingham',
+                      //     'Sr. Francis Chichester',
+                      //     'Sr. Robin Knox-Johnston'
+                      //   ],
+                      //   type: 1,
+                      //   possible_answers: 1,
+                      //   isSubmitted: isSubmitted,
+                      //   onChange: (state) {
+                      //     setState(() {
+                      //       disabled = state;
+                      //     });
+                      //   },
+                      // ),
+                      child: TestContent(
+                        question: Questions[index],
+                        answers: Answers[index],
+                        type: index,
+                        possible_answers: PossibleAnswers[index],
+                        isSubmitted: isSubmitted,
+                        onChange: (state) {
+                          setState(() {
+                            disabled = state;
+                          });
+                        },
+                      ),
 
-                    // Expanded(
-                    //     child: SingleChildScrollView(
-                    //         // child: TestContent(
-                    //         //   question:
-                    //         //       'Who was the first person to sail single-handed around the world?',
-                    //         //   answers: [
-                    //         //     'Sr. Francis Drake',
-                    //         //     'Sr. Francis Walsingham',
-                    //         //     'Sr. Francis Chichester',
-                    //         //     'Sr. Robin Knox-Johnston'
-                    //         //   ],
-                    //         //   condition: false,
-                    //         //   count: 4,
-                    //         // ),
+                      // child: TestContent(
+                      //   question:
+                      //       'Who was the first person to sail single-handed around the world?Who was the first person to sail single-handed around the world?Who was the first person to sail single-handed around the world?',
+                      //   answers: [
+                      //     'Sr. Francis Drake',
+                      //     'Sr. Francis Walsingham',
+                      //   ],
+                      //   type: 3,
+                      //   possible_answers: 1,
+                      //   isSubmitted: isSubmitted,
+                      //   onChange: (state) {
+                      //     setState(() {
+                      //       disabled = state;
+                      //     });
+                      //   },
+                      // ),
 
-                    //         // child: TestContent(
-                    //         //   question:
-                    //         //       'Who was the first person to sail single-handed around the world?Who was the first person to sail single-handed around the world?Who was the first person to sail single-handed around the world?',
-                    //         //   answers: [
-                    //         //     'Sr. Francis Drake',
-                    //         //     'Sr. Francis Walsingham',
-                    //         //   ],
-                    //         //   condition: false,
-                    //         //   count: 2,
-                    //         // ),
-                    //         )),
-
-                    TestContent(
-                      question:
-                          'Who was the first person to sail single-handed around the world?',
-                      answers: [],
-                      condition: true,
-                      count: 0,
-                    ),
-                    Spacer(
-                      flex: 1,
-                    ),
+                      // child: TestContent(
+                      //     question:
+                      //         'Who was the first person to sail single-handed around the world?',
+                      //     answers: [],
+                      //     type: 4,
+                      //     possible_answers: 1,
+                      //     isSubmitted: isSubmitted,
+                      //     onChange: (state) {
+                      //       setState(() {
+                      //         disabled = state;
+                      //       });
+                      //     }),
+                    )),
+                    ///////////////////////////Submit//////////////////////////////
                     Row(
                       children: [
                         const Spacer(
@@ -144,7 +257,20 @@ class _FullTestPage extends State<FullTestPage> {
                         ),
                         SizedBox(
                             child: SubmitButton(
-                                text: Strings.submitButton.toUpperCase())),
+                                disabled: disabled,
+                                text: isSubmitted
+                                    ? Strings.feedbackButton
+                                    : Strings.submitButton,
+                                onSubmit: () {
+                                  setState(() {
+                                    isSubmitted = true;
+                                  });
+                                },
+                                onFeedback: () {
+                                  setState(() {
+                                    showFeedback = true;
+                                  });
+                                })),
                         const Spacer(
                           flex: 1,
                         )

@@ -11,10 +11,16 @@ class AnswerButton extends StatefulWidget {
   final String answer;
   final bool isTrue;
   final bool isChecked;
+  final int index;
+  final List<bool> states;
+  final Function onChange;
 
   const AnswerButton({
     super.key,
     required this.answer,
+    required this.index,
+    required this.states,
+    required this.onChange,
     this.isTrue = true,
     this.isChecked = false,
   });
@@ -36,6 +42,10 @@ class _AnswerButtonState extends State<AnswerButton> {
   void onClick() {
     setState(() {
       status = !status;
+      widget.onChange(widget.index, status);
+      // if (status) {
+      //   context.read<TestPageBloc>().add(AnswerSelected());
+      // }
     });
   }
 
@@ -44,60 +54,51 @@ class _AnswerButtonState extends State<AnswerButton> {
     return Container(
         margin: const EdgeInsets.only(bottom: 15),
         child: ElevatedButton(
-          onPressed: () {
-            onClick();
-            // Add your button logic here
-          },
-          style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 26),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-                side: BorderSide(
-                  width: 2.0, // Set the desired border width here
-                  color: !widget.isChecked
-                      ? Colors.grey
-                      : (widget.isTrue
-                          ? ThemeColors.success
-                          : ThemeColors
-                              .primary), // Set the desired border color here
+            onPressed: () {
+              onClick();
+              // Add your button logic here
+            },
+            style: ElevatedButton.styleFrom(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 26, horizontal: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  side: BorderSide(
+                    width: 2.0, // Set the desired border width here
+                    color: !widget.isChecked
+                        ? Colors.grey
+                        : (widget.isTrue
+                            ? ThemeColors.success
+                            : ThemeColors
+                                .primary), // Set the desired border color here
+                  ),
                 ),
-              ),
-              backgroundColor:
-                  status == true ? ThemeColors.background : ThemeColors.label,
-              foregroundColor: ThemeColors.secondary,
-              shadowColor: Colors.grey,
-              elevation: 3.0,
-              splashFactory: NoSplash.splashFactory),
-          child: Row(
-            children: [
-              const Spacer(
-                flex: 3,
-              ),
-              Text(
-                widget.answer,
-                textAlign: TextAlign.center,
-                style: CustomTextStyle.LabelText(),
-              ),
-              const Spacer(
-                flex: 2,
-              ),
-              if (widget.isChecked && widget.isTrue)
-                SvgPicture.asset(
-                  SvgIcons.success,
-                  width: 24,
-                  height: 24,
+                backgroundColor:
+                    status == true ? ThemeColors.background : ThemeColors.label,
+                foregroundColor: ThemeColors.secondary,
+                shadowColor: Colors.grey,
+                elevation: 3.0,
+                splashFactory: NoSplash.splashFactory),
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    widget.answer,
+                    textAlign: TextAlign.center,
+                    style: CustomTextStyle.LabelText(),
+                  ),
                 ),
-              if (widget.isChecked && !widget.isTrue)
-                SvgPicture.asset(
-                  SvgIcons.fail,
-                  width: 24,
-                  height: 24,
-                ),
-              const Spacer(
-                flex: 1,
-              ),
-            ],
-          ),
-        ));
+                if (widget.isChecked)
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: SvgPicture.asset(
+                      widget.isTrue ? SvgIcons.success : SvgIcons.fail,
+                      width: 24,
+                      height: 24,
+                    ),
+                  ),
+              ],
+            )));
   }
 }

@@ -7,19 +7,23 @@ import 'package:red_squirrel/widgets/question_label.dart';
 import 'package:red_squirrel/widgets/boolean_button_compound.dart';
 
 class TestContent extends StatefulWidget {
-  final int count;
-  final bool condition;
+  final int type;
   final String question;
   final List<String> answers;
   final Color backgroundColor;
   final Color foregroundColor;
+  final Function onChange;
+  final int possible_answers;
+  final bool isSubmitted;
 
   const TestContent({
     super.key,
-    required this.count,
-    required this.condition,
+    required this.type,
     required this.question,
     required this.answers,
+    required this.onChange,
+    required this.possible_answers,
+    required this.isSubmitted,
     this.backgroundColor = ThemeColors.secondary,
     this.foregroundColor = ThemeColors.progress,
   });
@@ -29,72 +33,119 @@ class TestContent extends StatefulWidget {
 }
 
 class _TestContentState extends State<TestContent> {
-  int count = 0;
-  bool condition = false;
+  int type = 0;
   String question = '';
   List<String> answers = [];
+  List<bool> states = [false, false, false, false];
+  bool conditionState = false;
+  bool isSubmitted = false;
 
   @override
   void initState() {
     super.initState();
-    count = widget.count;
-    condition = widget.condition;
-    question = widget.question;
-    answers = widget.answers;
   }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (type != 4) {
+        int selectedCount = 0;
+        for (int i = 0; i < 4; i++) {
+          if (states[i] == true) selectedCount++;
+        }
+        // Call setState() or markNeedsBuild() here
+        if (selectedCount == widget.possible_answers) {
+          widget.onChange(false);
+        } else {
+          widget.onChange(true);
+        }
+      } else {
+        if (conditionState) {
+          widget.onChange(false);
+        }
+      }
+    });
+
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       QuestionLabel(
-        question: question,
+        question: widget.question,
       ),
-      if (!condition)
+      if (widget.type != 4)
         Column(
           children: [
-            SizedBox(height: count == 4 ? 40 : 80),
+            SizedBox(height: widget.type != 3 ? 40 : 80),
             AnswerButton(
-              answer: answers[0],
-              isChecked: true,
+              answer: widget.answers[0],
+              isChecked: widget.isSubmitted,
               isTrue: false,
+              onChange: (i, value) {
+                setState(() {
+                  states[i] = value;
+                });
+              },
+              states: states,
+              index: 0,
             ),
-            SizedBox(height: count == 4 ? 0 : 20),
+            SizedBox(height: widget.type != 3 ? 0 : 20),
             AnswerButton(
-              answer: answers[1],
-              isChecked: true,
+              answer: widget.answers[1],
+              isChecked: widget.isSubmitted,
               isTrue: true,
+              onChange: (i, value) {
+                setState(() {
+                  states[i] = value;
+                });
+              },
+              states: states,
+              index: 1,
             ),
-            count == 4
+            widget.type != 3
                 ? AnswerButton(
-                    answer: answers[2],
-                    isChecked: true,
+                    answer: widget.answers[2],
+                    isChecked: widget.isSubmitted,
                     isTrue: false,
+                    onChange: (i, value) {
+                      setState(() {
+                        states[i] = value;
+                      });
+                    },
+                    states: states,
+                    index: 2,
                   )
                 : Container(),
-            count == 4
+            widget.type != 3
                 ? AnswerButton(
-                    answer: answers[3],
+                    answer: widget.answers[3],
+                    isChecked: widget.isSubmitted,
+                    isTrue: false,
+                    onChange: (i, value) {
+                      setState(() {
+                        states[i] = value;
+                      });
+                    },
+                    states: states,
+                    index: 3,
                   )
                 : Container(),
           ],
         )
       else
         Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            //const Spacer(flex: 1),
-            SizedBox(
-              height: 40,
+            const SizedBox(
+              height: 150,
             ),
             SizedBox(
                 child: BooleanButtonCompound(
-              isChecked: false,
+              isChecked: widget.isSubmitted,
               isTrue: true,
+              onChange: () {
+                setState(() {
+                  conditionState = true;
+                });
+              },
             )),
-            // const Spacer(flex: 1),
-            SizedBox(
-              height: 40,
-            ),
           ],
         )
     ]);

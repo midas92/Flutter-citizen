@@ -23,4 +23,12 @@ class SvgIcons {
   static const String false_outlined = "assets/icons/false.svg";
   static const String true_selected = "assets/icons/true_selected.svg";
   static const String false_selected = "assets/icons/false_selected.svg";
+  static const String line1 = "assets/icons/Line1.svg";
+  static const String line2 = "assets/icons/Line2.svg";
+  static const String line3 = "assets/icons/Line3.svg";
+  static const String checkResult = "assets/icons/Icon-checkList.svg";
+  static const String numberList = "assets/icons/Icon-numberList.svg";
+  static const String restart = "assets/icons/Icon-restart.svg";
+  static const String exit = "assets/icons/Icon-exit.svg";
+  static const String rectangle = "assets/icons/Rectangle.svg";
 }
