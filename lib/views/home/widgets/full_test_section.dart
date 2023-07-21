@@ -1,5 +1,4 @@
 // ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:red_squirrel/utils/constants/colors.dart';
@@ -11,8 +10,10 @@ import 'package:red_squirrel/views/full_test/test_page.dart';
 import 'package:red_squirrel/widgets/Rounded_button.dart';
 
 class FullTestSection extends StatefulWidget {
+  final Function spinAction;
   const FullTestSection({
     super.key,
+    required this.spinAction,
   });
 
   @override
@@ -20,21 +21,6 @@ class FullTestSection extends StatefulWidget {
 }
 
 class _FullTestSectionState extends State<FullTestSection> {
-  bool _isLoading = false;
-
-  void loadStateForSeconds() {
-    setState(() {
-      _isLoading = true;
-    }); // start the modal progress HUD
-
-    // Simulate a service call
-    Future.delayed(Duration(seconds: 2), () {
-      setState(() {
-        _isLoading = false;
-      }); // dismiss the modal progress HUD
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -73,8 +59,8 @@ class _FullTestSectionState extends State<FullTestSection> {
               right: 0,
               bottom: 0,
               child: RoundedButton(
-                onPressed: () {
-                  Navigator.of(context).push<void>(FullTestPage.route());
+                onPressed: () async {
+                  await Navigator.of(context).push<void>(FullTestPage.route());
                 },
                 text: Strings.homeStartButton,
                 outlined: true,
