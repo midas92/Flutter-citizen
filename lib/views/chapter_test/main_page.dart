@@ -29,86 +29,95 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    Column _testByChapter(
-        String chapter, String status, String percent, int score, int total) {
-      return Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(1),
-              // borderRadius: BorderRadius.circular(12),
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-              boxShadow: const [
-                BoxShadow(
-                    color: ThemeColors.progressBar,
-                    blurRadius: 2,
-                    spreadRadius: 2,
-                    offset: Offset(0, 2)),
-              ],
-              border: Border.all(width: 1.0, color: Colors.grey),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
+    GestureDetector _testByChapter(
+        String chapter, String status, String percent, int score) {
+      return GestureDetector(
+          onTap: () {
+            Navigator.of(context).push<void>(MainPage.route());
+          },
+          child: Column(
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(1),
+                  // borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: ThemeColors.progressBar,
+                        blurRadius: 2,
+                        spreadRadius: 2,
+                        offset: Offset(0, 2)),
+                  ],
+                  border: Border.all(width: 1.0, color: Colors.grey),
+                ),
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(status,
-                        style: status.toUpperCase() == "PASSED"
-                            ? CustomTextStyle.LabelText(ThemeColors.success)
-                            : CustomTextStyle.LabelText(ThemeColors.failed)
-                        // ,
-                        ),
-                    SizedBox(height: 10),
-                    Center(
-                      child: SvgPicture.asset(
-                        SvgIcons.line3,
-                        width: 130,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('$percent%',
+                        Text(status,
                             style: status.toUpperCase() == "PASSED"
                                 ? CustomTextStyle.LabelText(ThemeColors.success)
-                                : CustomTextStyle.LabelText(
-                                    ThemeColors.failed)),
-                        SizedBox(
-                          width: 40,
+                                : CustomTextStyle.LabelText(ThemeColors.failed)
+                            // ,
+                            ),
+                        SizedBox(height: 10),
+                        Center(
+                          child: SvgPicture.asset(
+                            SvgIcons.line3,
+                            width: 130,
+                          ),
                         ),
-                        Text('$score / $total',
-                            style: status.toUpperCase() == "PASSED"
-                                ? CustomTextStyle.LabelText(ThemeColors.success)
-                                : CustomTextStyle.LabelText(ThemeColors.failed))
+                        SizedBox(height: 10),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('$percent%',
+                                style: status.toUpperCase() == "PASSED"
+                                    ? CustomTextStyle.LabelText(
+                                        ThemeColors.success)
+                                    : CustomTextStyle.LabelText(
+                                        ThemeColors.failed)),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            Text('$score / 24',
+                                style: status.toUpperCase() == "PASSED"
+                                    ? CustomTextStyle.LabelText(
+                                        ThemeColors.success)
+                                    : CustomTextStyle.LabelText(
+                                        ThemeColors.failed))
+                          ],
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          chapter == "2&3" ? "Chapters " : Strings.chapter,
+                          // Strings.chapter,
+                          style:
+                              CustomTextStyle.DescText(ThemeColors.secondary),
+                        ),
+                        Text(
+                          chapter,
+                          style: CustomTextStyle.SubText(ThemeColors.secondary),
+                        )
                       ],
                     )
                   ],
                 ),
-                Row(
-                  children: [
-                    Text(
-                      chapter == "2&3" ? "Chapters " : Strings.chapter,
-                      // Strings.chapter,
-                      style: CustomTextStyle.DescText(ThemeColors.secondary),
-                    ),
-                    Text(
-                      chapter,
-                      style: CustomTextStyle.SubText(ThemeColors.secondary),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 40),
-        ],
-      );
+              ),
+              SizedBox(height: 40),
+            ],
+          ));
     }
 
     return Scaffold(
@@ -154,12 +163,10 @@ class _MainPageState extends State<MainPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             SizedBox(height: 40),
-                            _testByChapter(Strings.two, "Passed", "90", 20, 24),
-                            _testByChapter(
-                                Strings.four, "Passed", "90", 20, 24),
-                            _testByChapter(
-                                Strings.five, "Passed", "90", 20, 24),
-                            _testByChapter(Strings.six, "Failed", "90", 20, 24)
+                            _testByChapter(Strings.two, "Passed", "90", 20),
+                            _testByChapter(Strings.four, "Passed", "90", 20),
+                            _testByChapter(Strings.five, "Passed", "90", 20),
+                            _testByChapter(Strings.six, "Failed", "90", 20)
                           ]),
                     )),
                   ]),

@@ -66,7 +66,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
       onTap: () {
         switch (type) {
           case 1:
-            // This is widget in full_test/feedback_page
+            // This is widget in fulltest/ feedback_page
             Navigator.of(context).push<void>(MainPage.route());
             break;
           case 2:
@@ -128,11 +128,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     Widget statusSection = Container(
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-        child:
-            // Row(
-            //   crossAxisAlignment: CrossAxisAlignment.center,
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            Stack(
+        child: Stack(
           children: [
             Positioned(
               left: 0,
