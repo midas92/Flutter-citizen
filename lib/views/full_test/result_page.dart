@@ -129,11 +129,7 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     Widget statusSection = Container(
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-        child:
-            // Row(
-            //   crossAxisAlignment: CrossAxisAlignment.center,
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            Stack(
+        child: Stack(
           children: [
             Positioned(
               left: 0,

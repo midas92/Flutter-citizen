@@ -9,8 +9,11 @@ import 'package:red_squirrel/utils/constants/test_style.dart';
 import 'package:red_squirrel/widgets/Rounded_button.dart';
 
 class UpdateDataSection extends StatelessWidget {
+  final Function spinAction;
+
   const UpdateDataSection({
     super.key,
+    required this.spinAction,
   });
 
   @override
@@ -73,7 +76,9 @@ class UpdateDataSection extends StatelessWidget {
                           bottom: 0,
                           right: 0,
                           child: RoundedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                spinAction();
+                              },
                               text: Strings.homeUpdateButton,
                               backgroundColor:
                                   Theme.of(context).colorScheme.secondary,
@@ -85,7 +90,7 @@ class UpdateDataSection extends StatelessWidget {
               Indexed(
                   index: 1,
                   child: Positioned(
-                      top: -10,
+                      top: 0,
                       left: 16,
                       child: SvgPicture.asset(
                         "assets/icons/speaker.svg",
