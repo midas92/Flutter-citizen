@@ -39,7 +39,6 @@ class _HomePageState extends State<HomePage> {
         child: Stack(children: [
           Container(
             width: double.infinity,
-            height: 190,
             color: Theme.of(context).colorScheme.primary,
             padding: const EdgeInsets.fromLTRB(60, 60, 40, 60),
             child: Row(
@@ -47,6 +46,7 @@ class _HomePageState extends State<HomePage> {
                 Image.asset(
                   Images.logo,
                   fit: BoxFit.fill,
+                  height: 60,
                 ),
                 const SizedBox(width: 20),
                 Container(

@@ -24,7 +24,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.of(context).push<void>(HomePage.route());
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
     });
 
     return SizedBox(
