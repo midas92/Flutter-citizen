@@ -28,7 +28,7 @@ class Spinner extends StatelessWidget {
       progressIndicator: Material(
         borderRadius: BorderRadius.circular(borderRadius),
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(10),
           child: Stack(
             children: [
               Positioned(
@@ -37,16 +37,17 @@ class Spinner extends StatelessWidget {
                 left: 0,
                 right: 0,
                 child: CircularProgressIndicator(
-                  color: circularProgressColor ??
-                      Theme.of(context).colorScheme.background,
+                  color: circularProgressColor ?? Colors.red,
                   strokeWidth: 2,
                 ),
               ),
               SizedBox(
-                width: appIconSize,
-                height: appIconSize,
-                child: Image.asset('assets/images/spinner.png'),
-              ),
+                  width: appIconSize,
+                  height: appIconSize,
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Image.asset('assets/images/spinner.png'),
+                  )),
             ],
           ),
         ),
