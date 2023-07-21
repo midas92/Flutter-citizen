@@ -1,5 +1,4 @@
-// ignore_for_file: file_names
-
+// ignore_for_file: library_private_types_in_public_api
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:red_squirrel/utils/constants/colors.dart';
@@ -10,11 +9,18 @@ import 'package:red_squirrel/utils/constants/test_style.dart';
 import 'package:red_squirrel/views/full_test/test_page.dart';
 import 'package:red_squirrel/widgets/Rounded_button.dart';
 
-class FullTestSection extends StatelessWidget {
+class FullTestSection extends StatefulWidget {
+  final Function spinAction;
   const FullTestSection({
     super.key,
+    required this.spinAction,
   });
 
+  @override
+  _FullTestSectionState createState() => _FullTestSectionState();
+}
+
+class _FullTestSectionState extends State<FullTestSection> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -25,10 +31,11 @@ class FullTestSection extends StatelessWidget {
           color: Colors.transparent,
           boxShadow: const [
             BoxShadow(
-                color: Colors.grey,
-                blurRadius: 5.0, // soften the shadow
-                spreadRadius: 1.0,
-                blurStyle: BlurStyle.outer),
+              color: Colors.grey,
+              blurRadius: 5.0,
+              spreadRadius: 1.0,
+              blurStyle: BlurStyle.outer,
+            ),
           ],
         ),
         child: Container(
@@ -39,51 +46,64 @@ class FullTestSection extends StatelessWidget {
           ),
           child: Stack(children: [
             Positioned(
-                left: 0,
-                bottom: 0,
-                width: 64,
-                height: 64,
-                child: SvgPicture.asset(
-                  SvgIcons.clock,
-                  fit: BoxFit.cover,
-                )),
+              left: 0,
+              bottom: 0,
+              width: 64,
+              height: 64,
+              child: SvgPicture.asset(
+                SvgIcons.clock,
+                fit: BoxFit.cover,
+              ),
+            ),
             Positioned(
-                right: 0,
-                bottom: 0,
-                child: RoundedButton(
-                    onPressed: () {
-                      Navigator.of(context).push<void>(FullTestPage.route());
-                    },
-                    text: Strings.homeStartButton,
-                    outlined: true,
-                    foregroundColor: Theme.of(context).colorScheme.secondary)),
+              right: 0,
+              bottom: 0,
+              child: RoundedButton(
+                onPressed: () async {
+                  await Navigator.of(context).push<void>(FullTestPage.route());
+                },
+                text: Strings.homeStartButton,
+                outlined: true,
+                foregroundColor: Theme.of(context).colorScheme.secondary,
+              ),
+            ),
             Positioned(
-                top: 10,
-                left: 0,
-                right: 0,
-                child: Text(
-                  Strings.homeFullTest,
-                  textAlign: TextAlign.center,
-                  style: CustomTextStyle.SectionTitle(ThemeColors.secondary, 28,
-                      FontWeight.w700, Fonts.primaryFont, [
+              top: 10,
+              left: 0,
+              right: 0,
+              child: Text(
+                Strings.homeFullTest,
+                textAlign: TextAlign.center,
+                style: CustomTextStyle.SectionTitle(
+                  ThemeColors.secondary,
+                  28,
+                  FontWeight.w700,
+                  Fonts.primaryFont,
+                  [
                     const Shadow(
-                        color: Colors.white,
-                        offset: Offset(3, 0),
-                        blurRadius: 0),
+                      color: Colors.white,
+                      offset: Offset(3, 0),
+                      blurRadius: 0,
+                    ),
                     const Shadow(
-                        color: Colors.white,
-                        offset: Offset(-3, 0),
-                        blurRadius: 0),
+                      color: Colors.white,
+                      offset: Offset(-3, 0),
+                      blurRadius: 0,
+                    ),
                     const Shadow(
-                        color: Colors.white,
-                        offset: Offset(0, 2),
-                        blurRadius: 0),
+                      color: Colors.white,
+                      offset: Offset(0, 2),
+                      blurRadius: 0,
+                    ),
                     const Shadow(
-                        color: Colors.white,
-                        offset: Offset(0, -2),
-                        blurRadius: 0)
-                  ]),
-                )),
+                      color: Colors.white,
+                      offset: Offset(0, -2),
+                      blurRadius: 0,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ]),
         ),
       ),

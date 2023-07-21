@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:red_squirrel/components/spinner.dart';
 import 'package:red_squirrel/utils/constants/colors.dart';
 import 'package:red_squirrel/utils/constants/fonts.dart';
 import 'package:red_squirrel/utils/constants/strings.dart';
@@ -30,123 +31,158 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  bool _isLoading = false;
+
+  void loadStateForSeconds() {
+    setState(() {
+      _isLoading = true;
+    }); // start the modal progress HUD
+
+    // Simulate a service call
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        _isLoading = false;
+      }); // dismiss the modal progress HUD
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(children: [
-      Expanded(
-        flex: 230,
-        child: Stack(children: [
-          Container(
-            width: double.infinity,
-            color: Theme.of(context).colorScheme.primary,
-            padding: const EdgeInsets.fromLTRB(60, 60, 40, 60),
-            child: Row(
-              children: [
-                Image.asset(
-                  Images.logo,
-                  fit: BoxFit.fill,
-                  height: 60,
-                ),
-                const SizedBox(width: 20),
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 0),
-                  child: Row(
-                    children: [
-                      Text(
-                        Strings.subTitle1,
-                        style: CustomTextStyle.TitleText(),
-                      ),
-                      SizedBox(
-                        width: 6,
-                      ),
-                      Column(
+        body: Stack(
+      children: [
+        Column(children: [
+          Expanded(
+            flex: 230,
+            child: Stack(children: [
+              Container(
+                width: double.infinity,
+                color: Theme.of(context).colorScheme.primary,
+                padding: const EdgeInsets.fromLTRB(60, 60, 40, 60),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      Images.logo,
+                      fit: BoxFit.fill,
+                      height: 60,
+                    ),
+                    const SizedBox(width: 20),
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 0),
+                      child: Row(
                         children: [
+                          Text(
+                            Strings.subTitle1,
+                            style: CustomTextStyle.TitleText(),
+                          ),
                           SizedBox(
-                            height: 12,
+                            width: 6,
                           ),
-                          Text(
-                            Strings.subTitle2,
-                            style: CustomTextStyle.LabelText(ThemeColors.label,
-                                16, FontWeight.w400, Fonts.secondaryFont),
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 12,
+                              ),
+                              Text(
+                                Strings.subTitle2,
+                                style: CustomTextStyle.LabelText(
+                                    ThemeColors.label,
+                                    16,
+                                    FontWeight.w400,
+                                    Fonts.secondaryFont),
+                              ),
+                              Text(
+                                Strings.subTitle3,
+                                style: CustomTextStyle.LabelText(
+                                    ThemeColors.label,
+                                    16,
+                                    FontWeight.w400,
+                                    Fonts.secondaryFont),
+                              ),
+                            ],
                           ),
-                          Text(
-                            Strings.subTitle3,
-                            style: CustomTextStyle.LabelText(ThemeColors.label,
-                                16, FontWeight.w400, Fonts.secondaryFont),
+                          SizedBox(
+                            width: 6,
                           ),
+                          Text(Strings.subTitle4,
+                              style: CustomTextStyle.TitleText()),
                         ],
                       ),
-                      SizedBox(
-                        width: 6,
-                      ),
-                      Text(Strings.subTitle4,
-                          style: CustomTextStyle.TitleText()),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: -1,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 20,
-              decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(24),
-                    topRight: Radius.circular(24),
-                  ),
-                  color: Theme.of(context).colorScheme.background),
-            ),
-          ),
-        ]),
-      ),
-      Expanded(
-          flex: 700,
-          child: Stack(
-            children: [
-              Positioned(
-                  bottom: -50,
-                  right: 10,
-                  width: 280,
-                  child: Image.asset(
-                    Images.bridge,
-                    fit: BoxFit.fill,
-                  )),
-              Container(
-                color: Colors.transparent,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                child: Column(
-                  children: const [
-                    FullTestSection(),
-                    SizedBox(height: 16),
-                    Expanded(
-                        flex: 20,
-                        child: Row(
-                          children: [
-                            ChapterTestSection(),
-                            SizedBox(width: 16),
-                            BuyBooksSection()
-                          ],
-                        )),
-                    SizedBox(height: 32),
-                    UpdateDataSection(),
-                    SizedBox(height: 64),
+                    )
                   ],
                 ),
               ),
-            ],
-          )),
-      Expanded(
-        flex: 55,
-        child: Container(
-          color: Theme.of(context).colorScheme.secondary,
-        ),
-      ),
-    ]));
+              Positioned(
+                bottom: -1,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 20,
+                  decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(24),
+                        topRight: Radius.circular(24),
+                      ),
+                      color: Theme.of(context).colorScheme.background),
+                ),
+              ),
+            ]),
+          ),
+          Expanded(
+              flex: 700,
+              child: Stack(
+                children: [
+                  Positioned(
+                      bottom: -50,
+                      right: 10,
+                      width: 280,
+                      child: Image.asset(
+                        Images.bridge,
+                        fit: BoxFit.fill,
+                      )),
+                  Container(
+                    color: Colors.transparent,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
+                    child: Column(
+                      children: [
+                        FullTestSection(spinAction: () {
+                          loadStateForSeconds();
+                        }),
+                        SizedBox(height: 16),
+                        Expanded(
+                            flex: 20,
+                            child: Row(
+                              children: [
+                                ChapterTestSection(),
+                                SizedBox(width: 16),
+                                BuyBooksSection()
+                              ],
+                            )),
+                        SizedBox(height: 32),
+                        UpdateDataSection(spinAction: () {
+                          loadStateForSeconds();
+                        }),
+                        SizedBox(height: 64),
+                      ],
+                    ),
+                  ),
+                ],
+              )),
+          Expanded(
+            flex: 55,
+            child: Container(
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+          ),
+        ]),
+        Center(
+          child: Spinner(
+            isLoading: _isLoading,
+            overlayBackgroundColor: Colors.black,
+          ),
+        )
+      ],
+    ));
   }
 }

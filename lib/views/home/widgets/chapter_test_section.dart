@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pressable/pressable.dart';
+import 'package:red_squirrel/components/exitModal.dart';
 import 'package:red_squirrel/utils/constants/colors.dart';
 import 'package:red_squirrel/utils/constants/fonts.dart';
 import 'package:red_squirrel/utils/constants/resources.dart';
@@ -18,7 +19,9 @@ class ChapterTestSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: Pressable.opacity(
-            onPressed: () {},
+            onPressed: () async {
+              await Navigator.of(context).push<void>(MainPage.route());
+            },
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),

@@ -41,4 +41,18 @@ class ThemeColors {
       Color(0x33FF0000),
     ],
   );
+  static const Gradient gradient4 = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Color(0xff424242), Color.fromARGB(149, 25, 25, 25), Colors.black],
+  );
+  static const Gradient gradient5 = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      Color.fromARGB(0, 66, 66, 66),
+      Color.fromARGB(0, 25, 25, 25),
+      Color.fromARGB(0, 25, 25, 25),
+    ],
+  );
 }
