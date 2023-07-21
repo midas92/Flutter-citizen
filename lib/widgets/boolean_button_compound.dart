@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:red_squirrel/utils/constants/colors.dart';
 import 'package:red_squirrel/utils/constants/fonts.dart';
 import 'package:red_squirrel/utils/constants/resources.dart';
@@ -12,6 +11,7 @@ class BooleanButtonCompound extends StatefulWidget {
   final bool isTrue;
   final Color backgroundColor;
   final Color foregroundColor;
+  final Function onChange;
   // final Function onPressed;
 
   const BooleanButtonCompound({
@@ -19,6 +19,7 @@ class BooleanButtonCompound extends StatefulWidget {
     // required this.onPressed,
     required this.isChecked,
     required this.isTrue,
+    required this.onChange,
     this.backgroundColor = ThemeColors.label,
     this.foregroundColor = ThemeColors.label,
   });
@@ -30,25 +31,25 @@ class BooleanButtonCompound extends StatefulWidget {
 class _BooleanButtonCompoundState extends State<BooleanButtonCompound> {
   int status = -1;
   late bool isTrue;
-  bool isChecked = false;
 
   @override
   void initState() {
     super.initState();
     isTrue = widget.isTrue;
-    isChecked = widget.isChecked;
   }
 
   void onTrue() {
     setState(() {
       status = 1;
     });
+    widget.onChange();
   }
 
   void onFalse() {
     setState(() {
       status = 0;
     });
+    widget.onChange();
   }
 
   @override
@@ -110,25 +111,26 @@ class _BooleanButtonCompoundState extends State<BooleanButtonCompound> {
                     onTrue();
                   },
                   child: Container(
-                      padding: isChecked
-                          ? const EdgeInsets.fromLTRB(0, 12, 0, 12)
-                          : const EdgeInsets.fromLTRB(15, 12, 5, 12),
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Row(children: [
-                        if (isChecked && isTrue)
+                        if (isTrue)
                           Image.asset(
                             Images.success,
                             width: 28,
                             height: 28,
+                            color: widget.isChecked && isTrue
+                                ? null
+                                : Color.fromRGBO(255, 255, 255, 0),
                           ),
-                        if (isChecked && !isTrue)
+                        if (!isTrue)
                           Image.asset(
                             Images.fail,
                             width: 28,
                             height: 28,
+                            color: widget.isChecked && !isTrue
+                                ? null
+                                : Color.fromRGBO(255, 255, 255, 0),
                           ),
-                        const SizedBox(
-                          width: 5,
-                        ),
                         Text(
                           'TRUE',
                           textAlign: TextAlign.center,
@@ -168,9 +170,7 @@ class _BooleanButtonCompoundState extends State<BooleanButtonCompound> {
                     onFalse();
                   },
                   child: Container(
-                      padding: isChecked
-                          ? const EdgeInsets.fromLTRB(0, 12, 0, 12)
-                          : const EdgeInsets.fromLTRB(5, 12, 12, 12),
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Row(
                         children: [
                           Text(
@@ -186,20 +186,23 @@ class _BooleanButtonCompoundState extends State<BooleanButtonCompound> {
                                 [],
                                 4),
                           ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          if (isChecked && !isTrue)
+                          if (!isTrue)
                             Image.asset(
                               Images.success,
                               width: 28,
                               height: 28,
+                              color: widget.isChecked && !isTrue
+                                  ? null
+                                  : Color.fromRGBO(255, 255, 255, 0),
                             ),
-                          if (isChecked && isTrue)
+                          if (isTrue)
                             Image.asset(
                               Images.fail,
                               width: 28,
                               height: 28,
+                              color: widget.isChecked && isTrue
+                                  ? null
+                                  : Color.fromRGBO(255, 255, 255, 0),
                             ),
                         ],
                       )))),

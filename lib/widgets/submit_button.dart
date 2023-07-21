@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:red_squirrel/utils/constants/colors.dart';
+import 'package:red_squirrel/utils/constants/strings.dart';
 import 'package:red_squirrel/utils/constants/test_style.dart';
 
 class SubmitButton extends StatelessWidget {
@@ -9,13 +10,15 @@ class SubmitButton extends StatelessWidget {
   final bool disabled;
   final Color backgroundColor;
   final Color foregroundColor;
-  // final Function onPressed;
+  final Function onSubmit;
+  final Function onFeedback;
 
   const SubmitButton({
     super.key,
-    // required this.onPressed,
+    required this.onSubmit,
+    required this.onFeedback,
     required this.text,
-    this.disabled = true,
+    required this.disabled,
     this.backgroundColor = ThemeColors.label,
     this.foregroundColor = ThemeColors.primary,
   });
@@ -40,14 +43,16 @@ class SubmitButton extends StatelessWidget {
             style: buttonStyle,
             onPressed: (!disabled
                 ? () {
-                    // onPressed();
+                    if (text == Strings.submitButton)
+                      onSubmit();
+                    else if (text == Strings.feedbackButton) onFeedback();
                   }
                 : null),
             child: Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 11, horizontal: 22),
                 child: Text(
-                  text,
+                  text.toUpperCase(),
                   textAlign: TextAlign.center,
                   style: CustomTextStyle.DescText(
                     disabled ? foregroundColor.withAlpha(80) : foregroundColor,

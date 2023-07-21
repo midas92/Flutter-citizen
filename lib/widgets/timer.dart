@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:red_squirrel/utils/constants/colors.dart';
 import 'package:red_squirrel/utils/constants/test_style.dart';
 
+import 'dart:async';
+
 class CountTimer extends StatefulWidget {
   final int timeDuration;
   final Color backgroundColor;
@@ -19,18 +21,27 @@ class CountTimer extends StatefulWidget {
 
 class _CounterState extends State<CountTimer> {
   late int timeDuration;
+  late Timer _timer;
+  int second = -1;
 
   @override
   void initState() {
     super.initState();
-    timeDuration = widget.timeDuration;
+    if (widget.timeDuration == 0) second = 1;
+    ticker();
   }
 
   void ticker() {
     setState(() {
-      if (timeDuration > 0) {
-        timeDuration -= 1;
-      }
+      timeDuration = widget.timeDuration;
+    });
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        timeDuration += second;
+        if (timeDuration < 0) {
+          _timer.cancel();
+        }
+      });
     });
   }
 
