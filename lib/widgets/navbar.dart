@@ -5,10 +5,12 @@ import 'package:red_squirrel/utils/constants/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:red_squirrel/utils/constants/resources.dart';
+import 'package:red_squirrel/utils/constants/strings.dart';
 
 import 'dart:math';
 
 import 'package:red_squirrel/views/home/home_page.dart';
+import 'package:red_squirrel/widgets/dialog.dart';
 
 class NavBar extends StatefulWidget {
   final Function backAction;
@@ -32,6 +34,17 @@ class _NavBarState extends State<NavBar> {
   @override
   void initState() {
     super.initState();
+  }
+
+  void cancelAction() {
+    Navigator.of(context).pop();
+  }
+
+  void homeAction() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const HomePage()),
+    );
   }
 
   @override
@@ -80,10 +93,15 @@ class _NavBarState extends State<NavBar> {
                         height: 38,
                       ),
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomePage()),
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomDialog(
+                                title: Strings.homeTitle,
+                                description: Strings.homeDescription,
+                                submitAction: homeAction,
+                                cancelAction: cancelAction);
+                          },
                         );
                       },
                     ),

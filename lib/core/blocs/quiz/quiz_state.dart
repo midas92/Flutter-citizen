@@ -1,23 +1,3 @@
-// part of 'quiz_bloc.dart';
-
-// abstract class QuizState {}
-
-// class QuizEmpty extends QuizState {}
-
-// class QuizLoading extends QuizState {}
-
-// class QuizLoaded extends QuizState {
-//   final List<Quiz> quizzes;
-
-//   QuizLoaded(this.quizzes);
-// }
-
-// class QuizError extends QuizState {
-//   final String error;
-
-//   QuizError(this.error);
-// }
-
 part of 'quiz_bloc.dart';
 
 enum QuizStatus { initial, loading, empty, success, failure }

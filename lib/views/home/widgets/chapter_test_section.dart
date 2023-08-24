@@ -1,8 +1,10 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pressable/pressable.dart';
+import 'package:red_squirrel/core/blocs/mark/mark_bloc.dart';
 // import 'package:red_squirrel/components/exit_modal.dart';
 import 'package:red_squirrel/utils/constants/colors.dart';
 import 'package:red_squirrel/utils/constants/fonts.dart';
@@ -21,6 +23,7 @@ class ChapterTestSection extends StatelessWidget {
     return Expanded(
         child: Pressable.opacity(
             onPressed: () async {
+              context.read<MarkBloc>().add(const MarkLoadRequested());
               await Navigator.of(context).push<void>(MainPage.route());
             },
             child: Container(

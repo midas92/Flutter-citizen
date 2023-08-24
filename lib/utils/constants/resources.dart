@@ -4,6 +4,7 @@ class Images {
   static const String bridge = "assets/images/bridge.png";
   static const String success = "assets/icons/success.png";
   static const String fail = "assets/icons/fail.png";
+  static const String title = "assets/images/title.png";
 }
 
 class SvgIcons {

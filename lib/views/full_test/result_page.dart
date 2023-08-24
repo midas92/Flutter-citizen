@@ -309,25 +309,25 @@ class _ResultPageState extends State<ResultPage> with TickerProviderStateMixin {
             ),
           ),
           Positioned(
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            child: Pressable.opacity(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomePage()),
-                  );
-                },
-                child: Center(
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: Center(
+                child: Pressable.opacity(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                    );
+                  },
                   child: SvgPicture.asset(
                     SvgIcons.diamond,
                     width: 36,
                     color: ThemeColors.secondary,
                   ),
-                )),
-          ),
+                ),
+              )),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
