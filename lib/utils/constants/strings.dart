@@ -22,6 +22,8 @@ class Strings {
   static const String backDescription = "Do you wanna exit test?";
   static const String testValidation =
       "You have not submitted answers to all the questions. Check again.";
+  static const String homeTitle = "Are you sure?";
+  static const String homeDescription = "Do you wanna exit test, go to Home Page?";
   static const String testByChapter = "Test by Chapter";
   static const String exitAppTitle = "Are you sure?";
   static const String exitAppDescription = "Do you want to exit an App?";

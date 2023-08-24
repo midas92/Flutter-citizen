@@ -8,7 +8,7 @@
     </queries>
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="red_squirrel"
+        android:label="Life in the UK: Practice with BritTest"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

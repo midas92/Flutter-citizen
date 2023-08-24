@@ -13,8 +13,7 @@ import 'package:red_squirrel/utils/constants/strings.dart';
 import 'package:red_squirrel/utils/constants/resources.dart';
 import 'package:red_squirrel/utils/constants/test_style.dart';
 import 'package:red_squirrel/utils/functions/array_function.dart';
-import 'package:red_squirrel/utils/functions/get_count_correct_answer.dart';
-import 'package:red_squirrel/views/full_test/result_page.dart';
+import 'package:red_squirrel/views/home/home_page.dart';
 import 'package:red_squirrel/widgets/feedback.dart';
 import 'package:red_squirrel/widgets/navbar.dart';
 import 'package:red_squirrel/widgets/progress_bar.dart';
@@ -57,10 +56,10 @@ class _FeedbackPage extends State<FeedbackPage> {
       if (index < count - 1) {
         index += 1;
       } else {
-        int correctCount = getCountCorrectAnswer(quiz, count);
-        int time = 445;
-        Navigator.of(context)
-            .push<void>(ResultPage.route(correctCount, count, time));
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
       }
     });
   }
@@ -133,6 +132,7 @@ class _FeedbackPage extends State<FeedbackPage> {
                               count: count,
                               step: index + 1,
                               caption: '$index+1 / $count',
+                              isFeedback: true,
                               next: () {
                                 next(quizModel);
                               },

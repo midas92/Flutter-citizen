@@ -1,29 +1,29 @@
+import 'package:red_squirrel/services/init_database.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 import 'package:red_squirrel/utils/constants/classes.dart';
 
 class QuizDao {
-  static Future<Database> database() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'red_squirrel.db');
+  // static Future<Database> database() async {
+  //   final dbPath = await getDatabasesPath();
+  //   final path = join(dbPath, 'red_squirrel.db');
 
-    // Pass the existing database instance if it is already open
-    final database = await openDatabase(
-      path,
-      onCreate: (db, version) {
-        return db.execute(
-          'CREATE TABLE IF NOT EXISTS quizzes (id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT, option_a TEXT, option_b TEXT, option_c TEXT, option_d TEXT, answer_a TEXT, answer_b TEXT, feedback TEXT, chapter INTEGER, type INTEGER)',
-        );
-      },
-      version: 1,
-    );
+  //   // Pass the existing database instance if it is already open
+  //   final database = await openDatabase(
+  //     path,
+  //     onCreate: (db, version) {
+  //       return db.execute(
+  //         'CREATE TABLE IF NOT EXISTS quizzes (id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT, option_a TEXT, option_b TEXT, option_c TEXT, option_d TEXT, answer_a TEXT, answer_b TEXT, feedback TEXT, chapter INTEGER, type INTEGER)',
+  //       );
+  //     },
+  //     version: 1,
+  //   );
 
-    return database;
-  }
+  //   return database;
+  // }
 
   // A method that inserts quiz into the database
   static Future<void> insertQuiz(Quiz quiz) async {
-    final db = await database();
+    final db = await createDatabase();
 
     await db.insert(
       'quizzes',
@@ -35,7 +35,7 @@ class QuizDao {
   // A method that retrieves quiz list from the quizzes table.
   static Future<List<Quiz>> getQuiz(List<int> chapter, int count) async {
     // Get a reference to the database.
-    final db = await database();
+    final db = await createDatabase();
     final List<Map<String, dynamic>> maps;
     if (chapter[0] == 1) {
       maps = await db.query(
@@ -75,7 +75,7 @@ class QuizDao {
   // A method that update specfic quiz
   static Future<void> updateQuiz(Quiz quiz) async {
     // Get a reference to the database.
-    final db = await database();
+    final db = await createDatabase();
 
     // Update the given quiz.
     await db.update(
@@ -91,7 +91,7 @@ class QuizDao {
   // A method that remove specific quiz
   static Future<void> deleteQuiz(int id) async {
     // Get a reference to the database.
-    final db = await database();
+    final db = await createDatabase();
 
     // Remove the quiz from the database.
     await db.delete(

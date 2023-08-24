@@ -1,15 +1,18 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, prefer_const_constructors, library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pressable/pressable.dart';
+import 'package:red_squirrel/core/blocs/mark/mark_bloc.dart';
 import 'package:red_squirrel/core/blocs/quiz/quiz_bloc.dart';
+import 'package:red_squirrel/core/models/mark_model.dart';
+import 'package:red_squirrel/services/mark.dart';
+import 'package:red_squirrel/utils/constants/classes.dart';
 import 'package:red_squirrel/utils/constants/colors.dart';
 import 'package:red_squirrel/utils/constants/strings.dart';
 import 'package:red_squirrel/utils/constants/resources.dart';
 // import 'package:red_squirrel/widgets/navbar.dart';
 import 'package:red_squirrel/utils/constants/test_style.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:red_squirrel/utils/functions/cal_percentage.dart';
 import 'package:red_squirrel/views/chapter_test/test_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -31,10 +34,16 @@ class _MainPageState extends State<MainPage> {
     super.initState();
   }
 
+  // Future<List<String>>
+  void fetchData() async {
+    // Simulated asynchronous fetch of data
+    List<dynamic> marks = await getMarks();
+  }
+
   @override
   Widget build(BuildContext context) {
     _testByChapter(int chapterNumber, String chapter, String status,
-        String percent, int score, int total) {
+        int percent, int score, int total) {
       return Pressable.opacity(
           onPressed: () async {
             List<int> chapters = [];
@@ -154,66 +163,146 @@ class _MainPageState extends State<MainPage> {
           ));
     }
 
-    return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        body: Column(children: [
-          //////////// Header ///////////////
-          Container(
-            padding: const EdgeInsets.only(bottom: 15, top: 49),
-            color: Theme.of(context).colorScheme.primary,
-            alignment: Alignment.center,
-            child: Center(
-              child: Text(Strings.testByChapter.toUpperCase(),
-                  style: CustomTextStyle.SectionTitle(ThemeColors.label)),
-            ),
-          ),
-
-          /////////////Content////////////
-          Expanded(
-            child: Stack(children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
-                clipBehavior: Clip.none,
-                decoration: const BoxDecoration(
-                  color: ThemeColors.background,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16)),
+    return BlocBuilder<MarkBloc, MarkState>(
+      builder: (context, state) {
+        if (state.status == MarkStatus.loading) {
+          return Container();
+        } else if (state.status == MarkStatus.success) {
+          MarkModel mark = context.read<MarkBloc>().state.mark;
+          return Scaffold(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              body: Column(children: [
+                //////////// Header ///////////////
+                Container(
+                  padding: const EdgeInsets.only(bottom: 15, top: 49),
+                  color: Theme.of(context).colorScheme.primary,
+                  alignment: Alignment.center,
+                  child: Center(
+                    child: Text(Strings.testByChapter.toUpperCase(),
+                        style: CustomTextStyle.SectionTitle(ThemeColors.label)),
+                  ),
                 ),
-                child: Stack(children: [
-                  Positioned(
-                      bottom: -46,
-                      right: -12,
-                      width: 280,
-                      child: Image.asset(
-                        Images.bridge,
-                        fit: BoxFit.scaleDown,
-                      )),
-                  Column(children: [
-                    Expanded(
-                        child: SingleChildScrollView(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            SizedBox(height: 40),
-                            _testByChapter(
-                                2, Strings.two, "Passed", "90", 8, 12),
-                            _testByChapter(
-                                4, Strings.four, "Passed", "90", 20, 24),
-                            _testByChapter(
-                                5, Strings.five, "Passed", "90", 20, 24),
-                            _testByChapter(
-                                6, Strings.six, "Failed", "90", 20, 24)
-                          ]),
-                    )),
+
+                /////////////Content////////////
+                Expanded(
+                  child: Stack(children: [
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                      clipBehavior: Clip.none,
+                      decoration: const BoxDecoration(
+                        color: ThemeColors.background,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            topRight: Radius.circular(16)),
+                      ),
+                      child: Stack(children: [
+                        Positioned(
+                            bottom: -46,
+                            right: -12,
+                            width: 280,
+                            child: Image.asset(
+                              Images.bridge,
+                              fit: BoxFit.scaleDown,
+                            )),
+                        Column(children: [
+                          Expanded(
+                              child: SingleChildScrollView(
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  SizedBox(height: 40),
+                                  _testByChapter(
+                                      2,
+                                      Strings.two,
+                                      mark.marks![0].total != 0
+                                          ? calPercentage(
+                                                      mark.marks![0].correct,
+                                                      mark.marks![0].total) >
+                                                  75
+                                              ? "Passed"
+                                              : "Failed"
+                                          : "",
+                                      mark.marks![0].total != 0
+                                          ? calPercentage(
+                                              mark.marks![0].correct,
+                                              mark.marks![0].total)
+                                          : 0,
+                                      mark.marks![0].correct,
+                                      mark.marks![0].total),
+                                  _testByChapter(
+                                      4,
+                                      Strings.four,
+                                      mark.marks![1].total != 0
+                                          ? calPercentage(
+                                                      mark.marks![1].correct,
+                                                      mark.marks![1].total) >
+                                                  75
+                                              ? "Passed"
+                                              : "Failed"
+                                          : "",
+                                      mark.marks![1].total != 0
+                                          ? calPercentage(
+                                              mark.marks![1].correct,
+                                              mark.marks![1].total)
+                                          : 0,
+                                      mark.marks![1].correct,
+                                      mark.marks![1].total),
+                                  _testByChapter(
+                                      5,
+                                      Strings.five,
+                                      mark.marks![2].total != 0
+                                          ? calPercentage(
+                                                      mark.marks![2].correct,
+                                                      mark.marks![2].total) >
+                                                  75
+                                              ? "Passed"
+                                              : "Failed"
+                                          : "",
+                                      mark.marks![2].total != 0
+                                          ? calPercentage(
+                                              mark.marks![2].correct,
+                                              mark.marks![2].total)
+                                          : 0,
+                                      mark.marks![2].correct,
+                                      mark.marks![2].total),
+                                  _testByChapter(
+                                      6,
+                                      Strings.six,
+                                      mark.marks![3].total != 0
+                                          ? calPercentage(
+                                                      mark.marks![3].correct,
+                                                      mark.marks![3].total) >
+                                                  75
+                                              ? "Passed"
+                                              : "Failed"
+                                          : "",
+                                      mark.marks![3].total != 0
+                                          ? calPercentage(
+                                              mark.marks![3].correct,
+                                              mark.marks![3].total)
+                                          : 0,
+                                      mark.marks![3].correct,
+                                      mark.marks![3].total),
+                                ]),
+                          )),
+                        ]),
+                      ]),
+                    ),
                   ]),
-                ]),
-              ),
-            ]),
-          ),
-          ///////////  NavBar ///////////////
-          // NavBar(),
-        ]));
+                ),
+                ///////////  NavBar ///////////////
+                // NavBar(),
+              ]));
+        } else if (state.status == MarkStatus.empty) {
+          return Text('Mark is empty!');
+        } else if (state.status == MarkStatus.failure) {
+          return Text('Failed to load Mark.');
+        } else {
+          return Container();
+        }
+      },
+    );
   }
 }

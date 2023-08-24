@@ -10,19 +10,21 @@ import 'package:red_squirrel/utils/constants/test_style.dart';
 class ProgressBar extends StatefulWidget {
   final int count;
   final int step;
+  final String caption;
+  final bool isFeedback;
   final Function previous;
   final Function next;
-  final String caption;
   final Color backgroundColor;
   final Color foregroundColor;
 
   const ProgressBar({
     super.key,
-    required this.step,
     required this.count,
+    required this.step,
+    required this.caption,
     required this.previous,
     required this.next,
-    required this.caption,
+    this.isFeedback = false,
     this.backgroundColor = ThemeColors.secondary,
     this.foregroundColor = ThemeColors.progress,
   });
@@ -77,7 +79,9 @@ class _ProgressBarState extends State<ProgressBar> {
                 color: Colors.red,
                 icon: SvgPicture.asset(
                   widget.step == widget.count
-                      ? SvgIcons.nextDisabled
+                      ? widget.isFeedback == false
+                          ? SvgIcons.nextDisabled
+                          : SvgIcons.next
                       : SvgIcons.next,
                   width: 24,
                   height: 24,

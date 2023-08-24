@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:red_squirrel/core/blocs/mark/mark_bloc.dart';
 import 'package:red_squirrel/core/blocs/quiz/quiz_bloc.dart';
 import 'package:red_squirrel/core/repositories/quiz_repository.dart';
 import 'package:red_squirrel/utils/constants/strings.dart';
@@ -30,10 +31,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<QuizBloc>(
-      create: (context) => QuizBloc(quizRepository: _quizRepository),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<QuizBloc>(
+          create: (context) => QuizBloc(quizRepository: _quizRepository),
+        ),
+        BlocProvider<MarkBloc>(
+          create: (context) => MarkBloc(),
+        ),
+      ],
       child: const AppView(),
     );
+    // return BlocProvider<QuizBloc>(
+    //   create: (context) => QuizBloc(quizRepository: _quizRepository),
+    //   child: const AppView(),
+    // );
   }
 }
 

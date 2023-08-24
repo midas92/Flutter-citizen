@@ -24,7 +24,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 10), () async {
+    Future.delayed(const Duration(seconds: 1), () async {
       // await Future.dek
       await storeData();
       // ignore: use_build_context_synchronously

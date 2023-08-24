@@ -76,3 +76,52 @@ class Quiz {
     };
   }
 }
+
+class Mark {
+  final int id;
+  final int chapter;
+  final int correct;
+  final int total;
+  final int timestamp;
+
+  const Mark({
+    required this.id,
+    required this.chapter,
+    required this.correct,
+    required this.total,
+    required this.timestamp,
+  });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+
+    data['id'] = id;
+    data['chapter'] = chapter;
+    data['correct'] = correct;
+    data['total'] = total;
+    data['timestamp'] = timestamp;
+    return data;
+  }
+
+  factory Mark.fromJson(Map<String, dynamic> json) {
+    return Mark(
+      id: json['id'],
+      chapter: json['chapter'],
+      correct: json['correct'],
+      total: json['total'],
+      timestamp: json['timestamp'],
+    );
+  }
+
+  // Convert a Quiz into a Map. The keys must correspond to the names of the
+  // columns in the database.
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'chapter': chapter,
+      'correct': correct,
+      'total': total,
+      'timestamp': timestamp,
+    };
+  }
+}

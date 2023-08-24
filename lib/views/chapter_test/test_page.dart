@@ -113,7 +113,9 @@ class _ChapterTestPage extends State<ChapterTestPage> {
   }
 
   void refreshSubmitAction() {
-    context.read<QuizBloc>().add(const QuizLoadRequested([1], 24));
+    context.read<QuizBloc>().add(QuizLoadRequested(
+        widget.chapter == 2 ? [2, 3] : [widget.chapter],
+        widget.chapter == 2 ? 12 : 24));
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
